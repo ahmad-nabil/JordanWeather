@@ -18,7 +18,13 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".pickLocation"
+            android:name=".othercity.othercity"
+            android:exported="false" />
+        <activity
+            android:name=".othercity.ListCity"
+            android:exported="false" />
+        <activity
+            android:name=".othercity.pickLocation"
             android:exported="false" />
         <activity
             android:name=".Home"
