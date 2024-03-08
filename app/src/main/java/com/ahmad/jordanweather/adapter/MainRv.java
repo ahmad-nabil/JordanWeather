@@ -37,14 +37,17 @@ Context context;
 
     @Override
     public void onBindViewHolder(@NonNull MainRv.holderWeather holder, int position) {
+ // Accessing the ItemsRecycleBinding from the ViewHolder
 holder.recycleBinding.summary.setText(dailyList.get(position).getSummary());
 holder.recycleBinding.max.setText((Math.round(dailyList.get(position).getTemp().getMax()- 273.15))+"\t C");
 holder.recycleBinding.min.setText((Math.round(dailyList.get(position).getTemp().getMin()- 273.15))+"\t C");
+ // Dynamically setting the weather icon based on the presence of the "rain" keyword
 if(dailyList.get(position).getSummary().contains("rain")){
     holder.recycleBinding.weather.setImageDrawable(AppCompatResources.getDrawable(context,R.drawable.rain));
 }else {
     holder.recycleBinding.weather.setImageDrawable(AppCompatResources.getDrawable(context,R.drawable.summer));
 }
+// Formatting and displaying the date using LocalDateTime and DateTimeFormatter
         long date=dailyList.get(position).getDt();
         LocalDateTime localDateTime=LocalDateTime.ofInstant(Instant.ofEpochSecond(date), ZoneId.systemDefault());
         DateTimeFormatter formatter=DateTimeFormatter.ofPattern("yyyy-MM-dd");

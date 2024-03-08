@@ -33,22 +33,28 @@ ActionBarDrawerToggle actionBarDrawerToggle;
         //inflate home
         homeBinding=ActivityHomeBinding.inflate(getLayoutInflater());
         setContentView(homeBinding.getRoot());
-
+//initialize navigation drawer
         actionBarDrawerToggle=new ActionBarDrawerToggle(this,homeBinding.drawer,homeBinding.materialToolbar,R.string.open,R.string.close);
         homeBinding.drawer.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
+        //initialize shared preferences
         sharedPreferences=getSharedPreferences("location",MODE_PRIVATE);
+        //initialize object getLocation to get location automatically
         getLocation=new getLocation(homeBinding,sharedPreferences);
+        //get values fro, sharedpreferences
         String lat=sharedPreferences.getString("Lat",null);
         String lon=sharedPreferences.getString("Lon",null);
+        //check if null or not if null will get location from fused location provider
         if (lat!=null&&lon!=null){
             ApiGecoding apiGecoding=new ApiGecoding(Double.parseDouble(lat),Double.parseDouble(lon),homeBinding);
             apiGecoding.getAddress();
         }else {
             getLocation.DetectLocationFusedProvider();
         }
+        //get data for weather api
         weatherAPI = new WeatherAPI(homeBinding);
         weatherAPI.getData();
+        //set Listener for nav
         homeBinding.NAV.setNavigationItemSelectedListener(this);
 
     }

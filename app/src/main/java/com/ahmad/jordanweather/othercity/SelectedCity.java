@@ -5,21 +5,13 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.DialogFragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.ahmad.jordanweather.ApiWeatherPackage.ForecastDay;
 import com.ahmad.jordanweather.ApiWeatherPackage.WeatherAPI;
-import com.ahmad.jordanweather.adapter.MainRv;
 import com.ahmad.jordanweather.databinding.FragmentSelectedCityBinding;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 
 public class SelectedCity extends DialogFragment {
@@ -34,11 +26,14 @@ WeatherAPI weatherAPI;
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 selectedCityBinding=FragmentSelectedCityBinding.inflate(inflater,container,false);
+    //initilize opjects weather api to get weather for city picked
        weatherAPI=new WeatherAPI();
        Bundle bundle=getArguments();
+      // check bundle if null or not
        if (bundle!=null){
            getWeather(bundle);
        }
+       //set background drawble transparent
        getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         return selectedCityBinding.getRoot();
     }
@@ -46,6 +41,6 @@ selectedCityBinding=FragmentSelectedCityBinding.inflate(inflater,container,false
     private void getWeather(Bundle bundle) {
         String lat=bundle.getString("lat");
         String lon=bundle.getString("lon");
-        weatherAPI.getDataListcity(lat, lon,selectedCityBinding) ;
+        weatherAPI.getDataPickedcity(lat, lon,selectedCityBinding) ;
     }
 }

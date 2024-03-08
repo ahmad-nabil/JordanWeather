@@ -14,7 +14,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiGecoding {
     double Lat;
     double longitude;
+  //base url for api to use in retrofit
     String baseUrl="https://api.mapbox.com/geocoding/v5/mapbox.places/";
+    //public key for access
 String pbAccsessToken="pk.eyJ1IjoiYWhtYWRuYWJpbHMiLCJhIjoiY2xxZWtwNDNrMG04ODJ1bWthMTB0bTlmdSJ9.G5HKqLOMtoGwvzB1h4kxvg";
   ActivityHomeBinding homeBinding;
 
@@ -24,6 +26,9 @@ String pbAccsessToken="pk.eyJ1IjoiYWhtYWRuYWJpbHMiLCJhIjoiY2xxZWtwNDNrMG04ODJ1bW
         this.homeBinding = homeBinding;
     }
 
+    /**
+     * Retrieves the address information using the Mapbox Geocoding API.
+     */
     public void getAddress() {
         Retrofit retrofit = new Retrofit.Builder().baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -33,14 +38,13 @@ gecodingInterface.getlocation(Lat,longitude,"place", pbAccsessToken).enqueue(new
     @Override
     public void onResponse(Call<Geocodingfetch> call, Response<Geocodingfetch> response) {
         assert response.body() != null;
+        // Updating the UI
         homeBinding.Address.setText(response.body().features.get(0).text);
 
     }
 
     @Override
     public void onFailure(Call<Geocodingfetch> call, Throwable t) {
-        Toast.makeText(homeBinding.getRoot().getContext(), "false", Toast.LENGTH_SHORT).show();
-        Log.e("TAG",t.getLocalizedMessage());
 
     }
 });
